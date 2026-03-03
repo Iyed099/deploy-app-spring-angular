@@ -30,11 +30,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      # Build images with names that match docker-compose.yml
       - name: Build Local Images
         run: |
           docker build -t spring-app ./springboot/app
           docker build -t angular-app ./angular-app
 
+      # Tag and Push to your Docker Hub repository
       - name: Push to Docker Hub
         run: |
           docker tag spring-app ${{ secrets.DOCKERHUB_USERNAME }}/springboot:latest
