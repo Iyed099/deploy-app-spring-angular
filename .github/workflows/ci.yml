@@ -31,7 +31,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       # Build images with names that match docker-compose.yml
-      - name: Build Local Images
+      - name: Build Local Image
         run: |
           docker build -t spring-app ./springboot/app
           docker build -t angular-app ./angular-app
