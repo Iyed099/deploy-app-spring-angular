@@ -30,14 +30,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push Spring Boot image
+      - name: Build Local Images
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/springboot:latest ./springboot/app
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/springboot:latest
+          docker build -t spring-app ./springboot/app
+          docker build -t angular-app ./angular-app
 
-      - name: Build and Push Angular image
+      - name: Push to Docker Hub
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/angular-app:latest ./angular-app
+          docker tag spring-app ${{ secrets.DOCKERHUB_USERNAME }}/springboot:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/springboot:latest
+          docker tag angular-app ${{ secrets.DOCKERHUB_USERNAME }}/angular-app:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/angular-app:latest
 
       - name: Run docker compose
